@@ -122,6 +122,10 @@ These are the public, unauthenticated job-board APIs the vendors document for pu
 - **No caching or rate limiting.** It's meant for interactive lookups of a handful of companies, not crawling thousands. Be polite with the public APIs.
 - If the same slug exists on more than one ATS (e.g. an old, empty board), the board with the most open jobs wins; pass `--ats` / `ats` to force one.
 
+## Run it in the cloud (no install)
+
+The same five-ATS fetcher is published as an Apify actor: **[ATS Jobs Feed on Apify](https://apify.com/krasyn-side/ats-jobs-feed?utm_source=gh-ats-jobs-mcp)**. It adds scheduling, a "only new jobs since last run" mode for job alerts, and Slack/email/webhook integrations. Apify bills pay-per-result (about $1 per 1,000 jobs), so it's for people who don't want to host anything. This CLI stays free.
+
 ## Need the whole market at once?
 
 This tool answers questions about one company at a time. If you want a snapshot across many companies without running lookups yourself, there is a paid dataset built from the same public sources: **[startup-hiring-data](https://benkrasin.github.io/startup-hiring-data/)** (also on [Gumroad](https://krasyn.gumroad.com/l/vyuqi), PayPal accepted)
