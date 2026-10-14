@@ -1,0 +1,32 @@
+{
+  "name": "ats-jobs-mcp",
+  "version": "0.1.0",
+  "description": "CLI + MCP server for open jobs from public Greenhouse, Lever and Ashby job boards. Zero dependencies.",
+  "type": "module",
+  "bin": {
+    "ats-jobs-mcp": "bin/cli.js"
+  },
+  "main": "src/ats.js",
+  "exports": {
+    ".": "./src/ats.js",
+    "./mcp": "./src/mcp.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "test": "node test/smoke.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["mcp", "mcp-server", "model-context-protocol", "greenhouse", "lever", "ashby", "jobs", "job-board", "ats", "recruiting", "claude"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benkrasin/ats-jobs-mcp.git"
+  },
+  "homepage": "https://github.com/benkrasin/ats-jobs-mcp#readme",
+  "bugs": "https://github.com/benkrasin/ats-jobs-mcp/issues",
+  "license": "MIT"
+}
