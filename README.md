@@ -126,6 +126,8 @@ These are the public, unauthenticated job-board APIs the vendors document for pu
 
 The same five-ATS fetcher is published as an Apify actor: **[ATS Jobs Feed on Apify](https://apify.com/krasyn-side/ats-jobs-feed?utm_source=gh-ats-jobs-mcp)**. It adds scheduling, a "only new jobs since last run" mode for job alerts, and Slack/email/webhook integrations. Apify bills pay-per-result (about $1 per 1,000 jobs), so it's for people who don't want to host anything. This CLI stays free.
 
+Company on **Workday** (`*.myworkdayjobs.com`)? Use **[workday-jobs-scraper](https://github.com/benkrasin/workday-jobs-scraper)** (free CLI) or the hosted **[Workday Jobs Scraper on Apify](https://apify.com/krasyn-side/workday-jobs-scraper?utm_source=gh-ats-jobs-mcp)**.
+
 ## Need the whole market at once?
 
 This tool answers questions about one company at a time. If you want a snapshot across many companies without running lookups yourself, there is a paid dataset built from the same public sources: **[startup-hiring-data](https://benkrasin.github.io/startup-hiring-data/)** (also on [Gumroad](https://krasyn.gumroad.com/l/vyuqi), PayPal accepted)
