@@ -124,7 +124,7 @@ These are the public, unauthenticated job-board APIs the vendors document for pu
 
 ## Need the whole market at once?
 
-This tool answers questions about one company at a time. If you want a snapshot across many companies without running lookups yourself, there is a paid dataset built from the same public sources: **[startup-hiring-data](https://benkrasin.github.io/startup-hiring-data/)**
+This tool answers questions about one company at a time. If you want a snapshot across many companies without running lookups yourself, there is a paid dataset built from the same public sources: **[startup-hiring-data](https://benkrasin.github.io/startup-hiring-data/)** (also on [Gumroad](https://krasyn.gumroad.com/l/vyuqi), PayPal accepted)
 
 - a $19 normalized CSV of 32,510 open roles from 390 startups, and
 - a $49 company-level hiring-signals file aimed at GTM / sales teams.
