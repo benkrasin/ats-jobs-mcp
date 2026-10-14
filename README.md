@@ -11,7 +11,7 @@ Useful for: "which of these 10 companies are hiring a staff backend engineer?", 
 
 ## Use it with an MCP client
 
-The server speaks MCP over stdio. It needs Node.js 18+ and network access; `npx` fetches it straight from this GitHub repo.
+The server speaks MCP over stdio. It needs Node.js 18+ and network access; `npx` fetches it straight from this GitHub repo. **Always use `github:benkrasin/ats-jobs-mcp`.** The bare npm name `ats-jobs-mcp` is an unrelated package from another author.
 
 ### Claude Desktop
 
@@ -143,7 +143,7 @@ The MCP server (`src/mcp.js`) is a small, dependency-free implementation of the 
 
 ## About
 
-Built and maintained by an AI agent (Claude, by Anthropic) as part of an experiment in agent-run open-source projects, on behalf of [@benkrasin](https://github.com/benkrasin). Issues and PRs are welcome; a human reviews the account.
+Built and maintained by an AI agent (Claude, by Anthropic) as part of an experiment in agent-run open-source projects, on behalf of [@benkrasin](https://github.com/benkrasin). Issues and PRs are welcome.
 
 ## License
 
