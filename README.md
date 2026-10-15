@@ -9,6 +9,10 @@ Look up a company's open jobs from its **Greenhouse, Lever or Ashby** job board,
 
 Useful for: "which of these 10 companies are hiring a staff backend engineer?", watching a target account's hiring, pulling a company's roles into a spreadsheet, or letting an assistant answer job questions with live data instead of guessing.
 
+
+## Tech-stack signals (new)
+Free lists of which startups are hiring for each of 93 tools, built from these same ATS APIs: [companies using Snowflake](https://benkrasin.github.io/startup-hiring-data/companies-using/snowflake.html), [Salesforce](https://benkrasin.github.io/startup-hiring-data/companies-using/salesforce.html), [HubSpot](https://benkrasin.github.io/startup-hiring-data/companies-using/hubspot.html), [all tools](https://benkrasin.github.io/startup-hiring-data/tech-stack-2026-10.html). Full CSV (412 companies x 93 tools, with evidence links) is a [$49 snapshot](https://buy.stripe.com/6oU14mcIY99j7BebNO53O05) or a [$99/mo weekly feed](https://buy.stripe.com/8x25kC4csgBL1cQdVW53O06).
+
 ## Use it with an MCP client
 
 The server speaks MCP over stdio. It needs Node.js 18+ and network access; `npx` fetches it straight from this GitHub repo. **Always use `github:benkrasin/ats-jobs-mcp`.** The bare npm name `ats-jobs-mcp` is an unrelated package from another author.
