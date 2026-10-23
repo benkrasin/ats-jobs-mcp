@@ -1,0 +1,29 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.benkrasin/ats-jobs-mcp",
+  "title": "ATS Jobs",
+  "description": "Open jobs from public Greenhouse, Lever and Ashby boards; keyword search across 1,287 companies.",
+  "repository": {
+    "url": "https://github.com/benkrasin/ats-jobs-mcp",
+    "source": "github"
+  },
+  "version": "0.2.0",
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/benkrasin/ats-jobs-mcp/releases/download/v0.2.0/ats-jobs-mcp.mcpb",
+      "fileSha256": "22da77cfd8c0ec96358fce5231004a03643696608024691b37dce8640a401d17",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "APIFY_TOKEN",
+          "description": "Optional. Only for search_jobs_all_companies (Apify bills about $1 per 1,000 jobs).",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ]
+}

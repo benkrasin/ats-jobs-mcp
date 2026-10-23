@@ -45,9 +45,62 @@ const TOOLS = [
     },
     annotations: { readOnlyHint: true, openWorldHint: true },
   },
+  {
+    name: 'search_jobs_all_companies',
+    title: 'Search jobs across 1,287 companies',
+    description:
+      'Keyword search across a built-in directory of 1,287 public startup and tech career boards ' +
+      '(Greenhouse, Lever, Ashby, SmartRecruiters, Workable, Personio, Recruitee) when you do not have a company list, ' +
+      'e.g. "data engineer jobs in Berlin posted this week". Runs the hosted ATS Jobs Feed actor on Apify and needs an ' +
+      'APIFY_TOKEN env var (a free Apify account works). Takes about a minute. Apify bills about $1 per 1,000 jobs returned; max_results caps the cost.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        keywords: { type: 'array', items: { type: 'string' }, description: 'Keep jobs whose title contains any of these, e.g. ["data engineer", "analytics engineer"].' },
+        locations: { type: 'array', items: { type: 'string' }, description: 'Optional. Keep jobs whose location contains any of these, e.g. ["Berlin", "Remote"].' },
+        remote_only: { type: 'boolean', description: 'Optional. Remote jobs only.' },
+        posted_within_days: { type: 'number', description: 'Optional. Only jobs posted/updated in the last N days (default 14).' },
+        max_results: { type: 'number', description: 'Max jobs to return and bill (default 100, max 1000; 100 jobs is about $0.10).' },
+      },
+      required: ['keywords'],
+      additionalProperties: false,
+    },
+    annotations: { readOnlyHint: true, openWorldHint: true },
+  },
 ];
 
+const ACTOR_URL = 'https://apify.com/krasyn-side/ats-jobs-feed?utm_source=ats-jobs-mcp';
+
+async function searchAllCompanies(args) {
+  const token = process.env.APIFY_TOKEN;
+  if (!token) {
+    return { text: 'search_jobs_all_companies needs an APIFY_TOKEN environment variable. Create a free Apify account, ' +
+      'copy the token from https://console.apify.com/settings/integrations and add "env": {"APIFY_TOKEN": "..."} to this ' +
+      `server's MCP config. Cost: about $1 per 1,000 jobs, billed by Apify. Or run it in the browser: ${ACTOR_URL}`, isError: true };
+  }
+  const keywords = (Array.isArray(args.keywords) ? args.keywords : [args.keywords]).filter(Boolean).map(String);
+  if (!keywords.length) throw new Error('"keywords" is required.');
+  const maxResults = Math.min(Math.max(1, Number(args.max_results) || 100), 1000);
+  const input = {
+    searchAllBoards: true, keywords, maxResults,
+    locations: Array.isArray(args.locations) ? args.locations.map(String) : [],
+    remoteOnly: !!args.remote_only,
+    postedWithinDays: Number(args.posted_within_days) || 14,
+  };
+  const res = await fetch('https://api.apify.com/v2/acts/krasyn-side~ats-jobs-feed/run-sync-get-dataset-items?timeout=280&clean=true', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
+    body: JSON.stringify(input),
+    signal: AbortSignal.timeout(300_000),
+  });
+  if (!res.ok) throw new Error(`Apify returned HTTP ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  const jobs = (await res.json()).slice(0, maxResults);
+  const out = { source: ACTOR_URL, input, returned: jobs.length, jobs };
+  return { text: JSON.stringify(out, null, 2), structured: out };
+}
+
 async function callTool(name, args = {}) {
+  if (name === 'search_jobs_all_companies') return searchAllCompanies(args);
   if (name === 'list_company_jobs') {
     if (!args.slug) throw new Error('"slug" is required.');
     const r = await fetchCompanyJobs(args.slug, { ats: args.ats, descriptions: !!args.include_descriptions });
@@ -104,7 +157,8 @@ export function startServer({ name = 'ats-jobs-mcp', version = '0.0.0' } = {}) {
             capabilities: { tools: { listChanged: false } },
             serverInfo: { name, version },
             instructions: 'Look up open jobs at a company via its public Greenhouse, Lever or Ashby job board. ' +
-              'Use detect_ats when unsure which ATS a company uses; list_company_jobs to get the jobs.',
+              'Use detect_ats when unsure which ATS a company uses; list_company_jobs to get the jobs; ' +
+              'search_jobs_all_companies to find matching jobs across 1,287 companies when there is no company list.',
           });
         }
         case 'ping':

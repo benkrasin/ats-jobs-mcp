@@ -84,7 +84,7 @@ await check('mcp stdio', async () => {
     assert.ok(init.result.capabilities.tools);
     child.stdin.write(JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' }) + '\n');
     const list = await rpc('tools/list', {});
-    assert.deepEqual(list.result.tools.map((t) => t.name).sort(), ['detect_ats', 'list_company_jobs']);
+    assert.deepEqual(list.result.tools.map((t) => t.name).sort(), ['detect_ats', 'list_company_jobs', 'search_jobs_all_companies']);
     const call = await rpc('tools/call', { name: 'list_company_jobs', arguments: { slug: 'ramp', ats: 'ashby', query: 'engineer', limit: 3 } });
     assert.equal(call.result.isError, false);
     const payload = JSON.parse(call.result.content[0].text);

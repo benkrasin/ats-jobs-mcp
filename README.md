@@ -10,8 +10,10 @@ Look up a company's open jobs from its **Greenhouse, Lever or Ashby** job board,
 Useful for: "which of these 10 companies are hiring a staff backend engineer?", watching a target account's hiring, pulling a company's roles into a spreadsheet, or letting an assistant answer job questions with live data instead of guessing.
 
 
-## Tech-stack signals (new)
-Free lists of which startups are hiring for each of 93 tools, built from these same ATS APIs: [companies using Snowflake](https://benkrasin.github.io/startup-hiring-data/companies-using/snowflake.html), [Salesforce](https://benkrasin.github.io/startup-hiring-data/companies-using/salesforce.html), [HubSpot](https://benkrasin.github.io/startup-hiring-data/companies-using/hubspot.html), [all tools](https://benkrasin.github.io/startup-hiring-data/tech-stack-2026-10.html). Full CSV (412 companies x 93 tools, with evidence links) is a [$49 snapshot](https://buy.stripe.com/6oU14mcIY99j7BebNO53O05) or a [$99/mo weekly feed](https://buy.stripe.com/8x25kC4csgBL1cQdVW53O06).
+## New: search 1,287 companies at once
+No company list? The `search_jobs_all_companies` tool searches a built-in directory of **1,287 public startup and tech career boards** (Greenhouse, Lever, Ashby, SmartRecruiters, Workable, Personio, Recruitee) by keyword, location, remote and posting date: *"data engineer jobs in Berlin or remote, posted this week"*. It runs the hosted [ATS Jobs Feed actor on Apify](https://apify.com/krasyn-side/ats-jobs-feed?utm_source=gh-ats-jobs-mcp), so it needs an `APIFY_TOKEN` (a free Apify account works) and Apify bills about **$1 per 1,000 jobs** returned (`max_results` defaults to 100, about $0.10). The two single-company tools stay free and keyless.
+
+MCP Registry name: `mcp-name: io.github.benkrasin/ats-jobs-mcp`
 
 ## Use it with an MCP client
 
@@ -26,11 +28,14 @@ Add to `claude_desktop_config.json` (Settings -> Developer -> Edit Config), then
   "mcpServers": {
     "ats-jobs": {
       "command": "npx",
-      "args": ["-y", "github:benkrasin/ats-jobs-mcp", "mcp"]
+      "args": ["-y", "github:benkrasin/ats-jobs-mcp", "mcp"],
+      "env": { "APIFY_TOKEN": "optional, only for search_jobs_all_companies" }
     }
   }
 }
 ```
+
+Or download `ats-jobs-mcp.mcpb` from the [latest release](https://github.com/benkrasin/ats-jobs-mcp/releases/latest) and double-click it to install in Claude Desktop.
 
 ### Claude Code
 
@@ -61,6 +66,7 @@ Any other MCP client that can launch a stdio server works the same way.
 |---|---|---|
 | `list_company_jobs` | `slug` (required; slug or board URL), `ats` (`greenhouse`/`lever`/`ashby`), `query`, `remote` (bool), `location`, `posted_within_days`, `include_descriptions`, `limit` (default 100) | Board info, total and matching counts, normalized jobs (newest first) |
 | `detect_ats` | `slug` | Which of the three ATSs has a board for that slug, and how many open jobs each has |
+| `search_jobs_all_companies` | `keywords` (required, array), `locations`, `remote_only`, `posted_within_days` (default 14), `max_results` (default 100) | Matching jobs across 1,287 companies. Needs `APIFY_TOKEN`; billed by Apify (~$1 per 1,000 jobs); takes about a minute |
 
 `query` matches title, department, team and location. Spaces mean AND, commas mean OR: `"backend engineer, sre"`.
 
@@ -131,15 +137,6 @@ These are the public, unauthenticated job-board APIs the vendors document for pu
 The same five-ATS fetcher is published as an Apify actor: **[ATS Jobs Feed on Apify](https://apify.com/krasyn-side/ats-jobs-feed?utm_source=gh-ats-jobs-mcp)**. It adds scheduling, a "only new jobs since last run" mode for job alerts, and Slack/email/webhook integrations. Apify bills pay-per-result (about $1 per 1,000 jobs), so it's for people who don't want to host anything. This CLI stays free.
 
 Company on **Workday** (`*.myworkdayjobs.com`)? Use **[workday-jobs-scraper](https://github.com/benkrasin/workday-jobs-scraper)** (free CLI) or the hosted **[Workday Jobs Scraper on Apify](https://apify.com/krasyn-side/workday-jobs-scraper?utm_source=gh-ats-jobs-mcp)**.
-
-## Need the whole market at once?
-
-This tool answers questions about one company at a time. If you want a snapshot across many companies without running lookups yourself, there is a paid dataset built from the same public sources: **[startup-hiring-data](https://benkrasin.github.io/startup-hiring-data/)** (also on [Gumroad](https://krasyn.gumroad.com/l/vyuqi), PayPal accepted)
-
-- a $19 normalized CSV of 32,510 open roles from 390 startups, and
-- a $49 company-level hiring-signals file aimed at GTM / sales teams.
-
-It's a point-in-time snapshot, not a live feed; see the page for exactly what's included. This repo stays free and MIT-licensed either way.
 
 ## Development
 

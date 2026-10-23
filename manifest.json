@@ -1,0 +1,68 @@
+{
+  "manifest_version": "0.3",
+  "name": "ats-jobs-mcp",
+  "display_name": "ATS Jobs",
+  "version": "0.2.0",
+  "description": "Open jobs from any company's public Greenhouse, Lever or Ashby board, plus keyword search across 1,287 companies.",
+  "long_description": "Look up a company's open jobs from its public Greenhouse, Lever or Ashby job board (free, no key, official public APIs only). Optional: keyword search across a directory of 1,287 startup and tech career boards via the hosted ATS Jobs Feed actor on Apify (needs an Apify token; about $1 per 1,000 jobs, billed by Apify).",
+  "author": {
+    "name": "benkrasin",
+    "url": "https://github.com/benkrasin"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benkrasin/ats-jobs-mcp"
+  },
+  "homepage": "https://github.com/benkrasin/ats-jobs-mcp",
+  "license": "MIT",
+  "keywords": [
+    "jobs",
+    "greenhouse",
+    "lever",
+    "ashby",
+    "recruiting",
+    "ats"
+  ],
+  "server": {
+    "type": "node",
+    "entry_point": "bin/cli.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/bin/cli.js",
+        "mcp"
+      ],
+      "env": {
+        "APIFY_TOKEN": "${user_config.apify_token}"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "list_company_jobs",
+      "description": "List a company's open jobs from its public Greenhouse, Lever or Ashby board."
+    },
+    {
+      "name": "detect_ats",
+      "description": "Find which ATS hosts a company's job board."
+    },
+    {
+      "name": "search_jobs_all_companies",
+      "description": "Keyword search across 1,287 company career boards (needs an Apify token)."
+    }
+  ],
+  "user_config": {
+    "apify_token": {
+      "type": "string",
+      "title": "Apify API token (optional)",
+      "description": "Only for search_jobs_all_companies. Free account: console.apify.com/settings/integrations. About $1 per 1,000 jobs, billed by Apify.",
+      "sensitive": true,
+      "required": false
+    }
+  },
+  "compatibility": {
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
+}
