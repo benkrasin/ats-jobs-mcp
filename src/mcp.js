@@ -47,11 +47,11 @@ const TOOLS = [
   },
   {
     name: 'search_jobs_all_companies',
-    title: 'Search jobs across 1,287 companies',
+    title: 'Search jobs across 4,280 companies',
     description:
-      'Keyword search across a built-in directory of 1,287 public startup and tech career boards ' +
+      'Keyword search across a built-in directory of 4,280 public startup and tech career boards ' +
       '(Greenhouse, Lever, Ashby, SmartRecruiters, Workable, Personio, Recruitee) when you do not have a company list, ' +
-      'e.g. "data engineer jobs in Berlin posted this week". Runs the hosted ATS Jobs Feed actor on Apify and needs an ' +
+      'e.g. "data engineer jobs in Berlin posted this week" or "ML jobs paying $200k+". Rows include published salary ranges. Runs the hosted ATS Jobs Feed actor on Apify and needs an ' +
       'APIFY_TOKEN env var (a free Apify account works). Takes about a minute. Apify bills about $1 per 1,000 jobs returned; max_results caps the cost.',
     inputSchema: {
       type: 'object',
@@ -60,6 +60,8 @@ const TOOLS = [
         locations: { type: 'array', items: { type: 'string' }, description: 'Optional. Keep jobs whose location contains any of these, e.g. ["Berlin", "Remote"].' },
         remote_only: { type: 'boolean', description: 'Optional. Remote jobs only.' },
         posted_within_days: { type: 'number', description: 'Optional. Only jobs posted/updated in the last N days (default 14).' },
+        min_salary_yearly: { type: 'number', description: 'Optional. Only jobs whose published pay range reaches at least this much per year (job currency; hourly/monthly pay annualised), e.g. 150000. Implies only jobs with a published salary.' },
+        only_with_salary: { type: 'boolean', description: 'Optional. Only jobs whose employer published a pay range (about a third of directory jobs).' },
         max_results: { type: 'number', description: 'Max jobs to return and bill (default 100, max 1000; 100 jobs is about $0.10).' },
       },
       required: ['keywords'],
@@ -87,6 +89,8 @@ async function searchAllCompanies(args) {
     remoteOnly: !!args.remote_only,
     postedWithinDays: Number(args.posted_within_days) || 14,
   };
+  if (Number(args.min_salary_yearly) > 0) input.minSalaryYearly = Math.round(Number(args.min_salary_yearly));
+  if (args.only_with_salary || input.minSalaryYearly) input.onlyWithSalary = true;
   const res = await fetch('https://api.apify.com/v2/acts/krasyn-side~ats-jobs-feed/run-sync-get-dataset-items?timeout=280&clean=true', {
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
@@ -158,7 +162,7 @@ export function startServer({ name = 'ats-jobs-mcp', version = '0.0.0' } = {}) {
             serverInfo: { name, version },
             instructions: 'Look up open jobs at a company via its public Greenhouse, Lever or Ashby job board. ' +
               'Use detect_ats when unsure which ATS a company uses; list_company_jobs to get the jobs; ' +
-              'search_jobs_all_companies to find matching jobs across 1,287 companies when there is no company list.',
+              'search_jobs_all_companies to find matching jobs across 4,280 companies when there is no company list.',
           });
         }
         case 'ping':

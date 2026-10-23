@@ -1,7 +1,7 @@
 {
   "name": "ats-jobs-mcp",
-  "version": "0.2.0",
-  "description": "CLI + MCP server for open jobs from public Greenhouse, Lever and Ashby job boards, plus keyword search across 1,287 companies. Zero dependencies.",
+  "version": "0.2.1",
+  "description": "CLI + MCP server for open jobs from public Greenhouse, Lever and Ashby job boards, plus keyword search across 4,280 companies. Zero dependencies.",
   "type": "module",
   "bin": {
     "ats-jobs-mcp": "bin/cli.js"

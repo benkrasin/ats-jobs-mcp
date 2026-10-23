@@ -2,9 +2,9 @@
   "manifest_version": "0.3",
   "name": "ats-jobs-mcp",
   "display_name": "ATS Jobs",
-  "version": "0.2.0",
-  "description": "Open jobs from any company's public Greenhouse, Lever or Ashby board, plus keyword search across 1,287 companies.",
-  "long_description": "Look up a company's open jobs from its public Greenhouse, Lever or Ashby job board (free, no key, official public APIs only). Optional: keyword search across a directory of 1,287 startup and tech career boards via the hosted ATS Jobs Feed actor on Apify (needs an Apify token; about $1 per 1,000 jobs, billed by Apify).",
+  "version": "0.2.1",
+  "description": "Open jobs from any company's public Greenhouse, Lever or Ashby board, plus keyword search across 4,280 companies.",
+  "long_description": "Look up a company's open jobs from its public Greenhouse, Lever or Ashby job board (free, no key, official public APIs only). Optional: keyword search across a directory of 4,280 startup and tech career boards via the hosted ATS Jobs Feed actor on Apify (needs an Apify token; about $1 per 1,000 jobs, billed by Apify).",
   "author": {
     "name": "benkrasin",
     "url": "https://github.com/benkrasin"
@@ -48,7 +48,7 @@
     },
     {
       "name": "search_jobs_all_companies",
-      "description": "Keyword search across 1,287 company career boards (needs an Apify token)."
+      "description": "Keyword search across 4,280 company career boards (needs an Apify token)."
     }
   ],
   "user_config": {
