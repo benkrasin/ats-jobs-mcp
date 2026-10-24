@@ -2,17 +2,17 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.benkrasin/ats-jobs-mcp",
   "title": "ATS Jobs",
-  "description": "Open jobs from public Greenhouse, Lever and Ashby boards; keyword search across 4,280 companies.",
+  "description": "Open jobs from public Greenhouse, Lever and Ashby boards; keyword search across 14,000+ companies.",
   "repository": {
     "url": "https://github.com/benkrasin/ats-jobs-mcp",
     "source": "github"
   },
-  "version": "0.2.1",
+  "version": "0.2.2",
   "packages": [
     {
       "registryType": "mcpb",
-      "identifier": "https://github.com/benkrasin/ats-jobs-mcp/releases/download/v0.2.1/ats-jobs-mcp.mcpb",
-      "fileSha256": "3728d3c4246c9777f481c20e785188a71ee49e0560135059f33b4167134a655a",
+      "identifier": "https://github.com/benkrasin/ats-jobs-mcp/releases/download/v0.2.2/ats-jobs-mcp.mcpb",
+      "fileSha256": "69ad33ed373c12aeb0d8a2f0cf350d228141f2325ce6eb3d4c01b607e5947eb1",
       "transport": {
         "type": "stdio"
       },
