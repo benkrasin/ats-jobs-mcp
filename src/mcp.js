@@ -47,9 +47,9 @@ const TOOLS = [
   },
   {
     name: 'search_jobs_all_companies',
-    title: 'Search jobs across 14,000+ companies',
+    title: 'Search jobs across 16,000+ companies',
     description:
-      'Keyword search across a built-in directory of 14,000+ public company career boards ' +
+      'Keyword search across a built-in directory of 16,000+ public company career boards ' +
       '(Greenhouse, Lever, Ashby, SmartRecruiters, Workable, Personio, Recruitee) when you do not have a company list, ' +
       'e.g. "data engineer jobs in Berlin posted this week" or "ML jobs paying $200k+". Rows include published salary ranges. Runs the hosted ATS Jobs Feed actor on Apify and needs an ' +
       'APIFY_TOKEN env var (a free Apify account works). Takes about a minute. Apify bills about $1 per 1,000 jobs returned; max_results caps the cost.',
@@ -162,7 +162,7 @@ export function startServer({ name = 'ats-jobs-mcp', version = '0.0.0' } = {}) {
             serverInfo: { name, version },
             instructions: 'Look up open jobs at a company via its public Greenhouse, Lever or Ashby job board. ' +
               'Use detect_ats when unsure which ATS a company uses; list_company_jobs to get the jobs; ' +
-              'search_jobs_all_companies to find matching jobs across 14,000+ companies when there is no company list.',
+              'search_jobs_all_companies to find matching jobs across 16,000+ companies when there is no company list.',
           });
         }
         case 'ping':
